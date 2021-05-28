@@ -29,7 +29,7 @@ public class Reader {
         return parameterRows.size();
     }
 
-    public Collection<NameValuePair> getParams(int i) {
+    public Collection<NameValuePair> getParams(int i, boolean replaceYear) {
         Collection<NameValuePair> params = new ArrayList<>();
 
         String text = parameterRows.get(i);
@@ -39,7 +39,7 @@ public class Reader {
         for(String str : parameters) {
             String[] pair = str.split("=");
             try {
-                if(pair[1].contains("3_20")) {
+                if(replaceYear && pair[1].contains("3_20")) {
                     pair[1] = "3_" + format.format(date);
                 }
                 params.add(new BasicNameValuePair(pair[0], pair[1]));

@@ -16,12 +16,15 @@ public class Main {
         String url = "https://fedstat.ru/indicator/data.do?format=excel";
         String readPath = "C:\\Users\\kirill.shadrin\\Downloads\\parametersNew.txt";
         String writePath = "C:\\Users\\kirill.shadrin\\Downloads\\hello";
+        boolean replaceYear = false;
 
         if(args.length > 0) {
             switch (args.length) {
                 case 1: readPath = args[0];
                 break;
                 case 2: readPath = args[0]; writePath = args[1];
+                break;
+                case 3: readPath = args[0]; writePath = args[1]; replaceYear = Boolean.parseBoolean(args[2]);
                 break;
             }
         }
@@ -30,7 +33,7 @@ public class Main {
         Reader reader = new Reader(readPath);
 
         for(int i = 0; i < reader.getCount(); i++) {
-            Collection<NameValuePair> nameValuePairs = reader.getParams(i);
+            Collection<NameValuePair> nameValuePairs = reader.getParams(i, replaceYear);
             if(nameValuePairs == null)
                 continue;
             Content response = httpService.CreatePost(url, nameValuePairs);
