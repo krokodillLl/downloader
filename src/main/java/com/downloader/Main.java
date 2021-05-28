@@ -14,29 +14,32 @@ public class Main {
     public static void main(String[] args) throws IOException {
 
         String url = "https://fedstat.ru/indicator/data.do?format=excel";
-        String readPath = "C:\\Users\\kirill.shadrin\\Downloads\\parameters.txt";
-        String writePath = "C:\\Users\\kirill.shadrin\\Downloads\\out.xlsx";
+        String readPath = "C:\\Users\\kirill.shadrin\\Downloads\\parametersNew.txt";
+        String writePath = "C:\\Users\\kirill.shadrin\\Downloads\\hello";
 
         if(args.length > 0) {
             switch (args.length) {
-                case 1: url = args[0];
+                case 1: readPath = args[0];
                 break;
-                case 2: url = args[0]; readPath = args[1];
-                break;
-                case 3: url = args[0]; readPath = args[1]; writePath = args[2];
+                case 2: readPath = args[0]; writePath = args[1];
                 break;
             }
         }
 
         HttpService httpService = new HttpService();
-        Reader reader = new Reader();
+        Reader reader = new Reader(readPath);
 
-        Collection<NameValuePair> params = reader.getParams(readPath);
+        for(int i = 0; i < reader.getCount(); i++) {
+            Collection<NameValuePair> nameValuePairs = reader.getParams(i);
+            if(nameValuePairs == null)
+                continue;
+            Content response = httpService.CreatePost(url, nameValuePairs);
 
-        Content response = httpService.CreatePost(url, params);
+            Writer writer = new Writer();
 
-        Writer writer = new Writer();
+            writer.writeExcel(writePath, reader.getName(i), response.asBytes());
+        }
 
-        writer.writeExcel(writePath, response.asBytes());
+
     }
 }
