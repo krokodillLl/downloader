@@ -14,8 +14,8 @@ public class Main {
     public static void main(String[] args) throws IOException {
 
         String url = "https://fedstat.ru/indicator/data.do?format=excel";
-        String readPath = "C:\\Users\\kirill.shadrin\\Downloads\\parametersNew.txt";
-        String writePath = "C:\\Users\\kirill.shadrin\\Downloads\\hello";
+        String readPath = "";
+        String writePath = "";
         boolean replaceYear = false;
 
         if(args.length > 0) {

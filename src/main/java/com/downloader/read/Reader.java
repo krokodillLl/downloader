@@ -16,8 +16,8 @@ import org.apache.http.message.BasicNameValuePair;
 
 public class Reader {
 
-    private List<String> nameRows = new ArrayList<>();
-    private List<String> parameterRows = new ArrayList<>();
+    private final List<String> nameRows = new ArrayList<>();
+    private final List<String> parameterRows = new ArrayList<>();
     private final SimpleDateFormat format = new SimpleDateFormat("yyyy");
     private final Date date = new Date();
 
@@ -45,7 +45,7 @@ public class Reader {
                 params.add(new BasicNameValuePair(pair[0], pair[1]));
             }
             catch (RuntimeException e) {
-                System.out.println("can't parse this parameter: " + Arrays.toString(pair));
+                System.out.println("can't parse this parameter: " + getName(i) + Arrays.toString(pair));
                 return null;
             }
         }
