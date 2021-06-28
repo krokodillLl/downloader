@@ -36,7 +36,10 @@ public class Main {
             Collection<NameValuePair> nameValuePairs = reader.getParams(i, replaceYear);
             if(nameValuePairs == null)
                 continue;
-            Content response = httpService.CreatePost(url, nameValuePairs);
+
+            Content response = httpService.CreatePost(url, nameValuePairs, reader.getName(i));
+            if(response == null)
+                continue;
 
             Writer writer = new Writer();
 

@@ -21,14 +21,15 @@ public class HttpService {
         return getResult;
     }
 
-    public Content CreatePost(String url, Collection<NameValuePair> params) {
+    public Content CreatePost(String url, Collection<NameValuePair> params, String name) {
         Content postResult = null;
         try {
             postResult = Request.Post(url)
                     .bodyForm(params, Charset.defaultCharset())
                     .execute().returnContent();
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("can't execute http request. Please, check params: " + name + "\n" + e.getMessage());
+            return null;
         }
 
         return postResult;
